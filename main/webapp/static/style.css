@@ -1,0 +1,26 @@
+:root {
+    --background-primary: #191A19;
+    --background-secondary: #2C2C2C;
+    --color-primary: #C8C8C8;
+    --color-secondary: #8946A6;
+    --color-tertiary: #EAEAEA;
+    --error-color-primary: #FD3535;
+    --success-color-primary: #35FD35;
+    --mid-color-primary: #2454FF;
+    --border-primary: #2C2C2C;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Poppins', serif;
+}
+
+body {
+    background-color: var(--background-primary);
+    color: var(--color-primary);
+}
