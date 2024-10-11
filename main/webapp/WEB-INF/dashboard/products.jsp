@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,96 +107,26 @@
     <div>
       <table>
         <thead>
-        <tr>
-          <td>ID</td>
-          <td>NOMBRE</td>
-          <td>PRESENTACIÓN</td>
-          <td>COMPOSICIÓN</td>
-          <td>STOCK</td>
-          <td>PRECIO</td>
-        </tr>
+          <tr>
+            <td>ID</td>
+            <td>NOMBRE</td>
+            <td>PRESENTACIÓN</td>
+            <td>COMPOSICIÓN</td>
+            <td>STOCK</td>
+            <td>PRECIO</td>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>Lipitor</td>
-          <td>20 mg</td>
-          <td>Paracetamol</td>
-          <td>10</td>
-          <td>199.99</td>
-        </tr>
+          <c:forEach var="producto" items="${productosCargados}">
+            <tr>
+                <td>${producto.id}</td>
+                <td>${producto.nombre}</td>
+                <td>${producto.presentacion}</td>
+                <td>${producto.composicion}</td>
+                <td>${producto.stock}</td>
+                <td>${producto.precio}</td>
+            </tr>
+          </c:forEach>
         </tbody>
       </table>
     </div>
