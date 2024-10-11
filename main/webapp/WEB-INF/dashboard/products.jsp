@@ -20,32 +20,32 @@
     <br>
     <div class="sidebar">
       <div class="radio">
-        <a href="dashboard/sells" class="sidebar-label">
+        <a href="sells" class="sidebar-label">
           <i class="bi bi-receipt"></i>
           <span>Ventas</span>
         </a>
       </div>
       <div class="radio checked">
-        <a href="dashboard/products" class="sidebar-label">
+        <a href="products" class="sidebar-label">
           <i class="bi bi-box"></i>
           <span>Productos</span>
         </a>
       </div>
       <div class="radio">
-        <a href="dashboard/labs" class="sidebar-label">
+        <a href="labs" class="sidebar-label">
           <i class="bi bi-shop"></i>
           <span>Laboratorios</span>
         </a>
       </div>
       <div class="radio">
         <input type="radio" class="sidebar-radio" id="sidebar-categories" name="sidebar-radio-group">
-        <a href="dashboard/categories" class="sidebar-label">
+        <a href="categories" class="sidebar-label">
           <i class="bi bi-diagram-3"></i>
           <span>Categorías</span>
         </a>
       </div>
       <div class="radio">
-        <a href="dashboard/distributors" class="sidebar-label">
+        <a href="distributors" class="sidebar-label">
           <i class="bi bi-truck"></i>
           <span>Distribuidoras</span>
         </a>
