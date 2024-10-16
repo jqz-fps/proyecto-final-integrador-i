@@ -1,5 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="pe.edu.utp.integradori.proyectofinal.model.Trabajador" %>
+<%
+  if (session == null || session.getAttribute("usuario") == null) {
+    response.sendRedirect(request.getContextPath() + "/login.jsp");
+    return;
+  }
+  Trabajador usuario = (Trabajador) session.getAttribute("usuario");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,12 +59,14 @@
           <span>Distribuidoras</span>
         </a>
       </div>
-      <div class="radio">
-        <a href="supervition" class="sidebar-label">
-          <i class="bi bi-person-fill-lock"></i>
-          <span>Panel de supervisores</span>
-        </a>
-      </div>
+      <c:if test="${usuario != null && usuario.hasRole('Supervisor')}">
+        <div class="radio">
+          <a href="supervition" class="sidebar-label">
+            <i class="bi bi-person-fill-lock"></i>
+            <span>Panel de supervisores</span>
+          </a>
+        </div>
+      </c:if>
       <div class="radio" data-bs-toggle="modal" data-bs-target="#sessionExitModal">
         <label class="sidebar-label"
                style="--background-secondary: #fa5050; --color-primary: #161616">
@@ -76,11 +86,18 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal">Cerrar Sesión</button>
+              <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal" onclick="document.getElementById('logout-form').submit();">Cerrar Sesión</button>
+              <form id="logout-form" action="${pageContext.request.contextPath}/logout" method="post" style="display:none;">
+                <input type="hidden" name="_method" value="POST">
+              </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div style="padding: 20px;">
+      Usuario:
+      <%= usuario.getAp_paterno() %>, <%= usuario.getAp_materno() %>
     </div>
   </div>
   <div class="dashboard">
