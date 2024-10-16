@@ -52,9 +52,9 @@
         </a>
       </div>
       <div class="radio">
-        <a href="administration" class="sidebar-label">
+        <a href="supervition" class="sidebar-label">
           <i class="bi bi-person-fill-lock"></i>
-          <span>Administración</span>
+          <span>Panel de supervisores</span>
         </a>
       </div>
       <div class="radio" data-bs-toggle="modal" data-bs-target="#sessionExitModal">
