@@ -51,6 +51,12 @@
           <span>Distribuidoras</span>
         </a>
       </div>
+      <div class="radio">
+        <a href="administration" class="sidebar-label">
+          <i class="bi bi-person-fill-lock"></i>
+          <span>Administración</span>
+        </a>
+      </div>
       <div class="radio" data-bs-toggle="modal" data-bs-target="#sessionExitModal">
         <label class="sidebar-label"
                style="--background-secondary: #fa5050; --color-primary: #161616">
