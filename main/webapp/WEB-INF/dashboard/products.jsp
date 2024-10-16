@@ -3,7 +3,7 @@
 <%@ page import="pe.edu.utp.integradori.proyectofinal.model.Trabajador" %>
 <%
   if (session == null || session.getAttribute("usuario") == null) {
-    response.sendRedirect(request.getContextPath() + "/login.jsp");
+    response.sendRedirect(request.getContextPath() + "/login");
     return;
   }
   Trabajador usuario = (Trabajador) session.getAttribute("usuario");
