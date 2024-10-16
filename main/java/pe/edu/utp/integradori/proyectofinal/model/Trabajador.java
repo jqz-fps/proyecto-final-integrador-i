@@ -66,7 +66,12 @@ public class Trabajador {
         return roles;
     }
 
+    public boolean hasRole(Rol rol) {
+        return roles.contains(rol);
+    }
+
     public ArrayList<Venta> getVentas() {
         return ventas;
     }
+
 }
