@@ -181,7 +181,7 @@
 <div class="recipt-print">
     <center><img src="${pageContext.request.contextPath}/static/images/logo-row.png" alt="Logo Líder Médica"></center>
     <div class="rp-header">
-        <span>LIDER MÉDICA S.A.</span><br>
+        <span>LÍDER MÉDICA S.A.</span><br>
         <span>AREA DE FARMACIA</span><br>
         <span>RUC: 20601443091 / Telefono: 967124423</span><br>
         <span>AV. GRAU 680 - LA VICTORIA</span><br>
