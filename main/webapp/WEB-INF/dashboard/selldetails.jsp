@@ -29,39 +29,39 @@
         <br>
         <div class="sidebar">
             <div class="radio checked">
-                <a href="sells" class="sidebar-label">
+                <a href="../sells" class="sidebar-label">
                     <i class="bi bi-receipt"></i>
                     <span>Ventas</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="products" class="sidebar-label">
+                <a href="../products" class="sidebar-label">
                     <i class="bi bi-box"></i>
                     <span>Productos</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="labs" class="sidebar-label">
+                <a href="../labs" class="sidebar-label">
                     <i class="bi bi-shop"></i>
                     <span>Laboratorios</span>
                 </a>
             </div>
             <div class="radio">
                 <input type="radio" class="sidebar-radio" id="sidebar-categories" name="sidebar-radio-group">
-                <a href="categories" class="sidebar-label">
+                <a href="../categories" class="sidebar-label">
                     <i class="bi bi-diagram-3"></i>
                     <span>Categorías</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="distributors" class="sidebar-label">
+                <a href="../distributors" class="sidebar-label">
                     <i class="bi bi-truck"></i>
                     <span>Distribuidoras</span>
                 </a>
             </div>
             <c:if test="${usuario != null && usuario.hasRole('Supervisor')}">
                 <div class="radio">
-                    <a href="supervition" class="sidebar-label">
+                    <a href="../supervition" class="sidebar-label">
                         <i class="bi bi-person-fill-lock"></i>
                         <span>Panel de supervisores</span>
                     </a>
@@ -107,13 +107,11 @@
             <div class="left">
                 <h3>Venta #${venta.id}</h3>
             </div>
-            <div class="right">
-                <h3>Vendedor: ${venta.vendedor.nombres} ${venta.vendedor.getAp_paterno()}</h3>
-            </div>
         </div>
 
         <div>
-            <table>
+            <a href="../sells" style="padding: 2px 0; border-bottom: dashed 2px;"><i class="bi bi-arrow-left"></i> Regresar</a>
+            <table style="margin-top: 20px;">
                 <thead>
                 <tr>
                     <td>ID PRODUCTO</td>
@@ -130,13 +128,111 @@
                         <td>${detalle.farmaco.nombre}</td>
                         <td>${detalle.cantidad}</td>
                         <td>${detalle.precio_unidad}</td>
-                        <td>${detalle.calcularTotal()}</td>
+                        <td>S/${detalle.calcularTotal()}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+            <div style="display: flex; justify-content: space-between; margin-top: 40px;">
+                <span>
+                    <b>Vendedor:</b> ${venta.vendedor.nombres} ${venta.vendedor.getAp_paterno()} <br>
+                    <b>Fecha:</b> ${venta.getFechaFormateada()} <br>
+                    <b>Total:</b> S/${venta.getTotal()}
+                </span>
+                <button type="button" class="btn btn-tertiary" onclick="window.print()"><i class="bi bi-printer"></i> Imprimir</button>
+            </div>
         </div>
 
+    </div>
+</div>
+<style>
+    .recipt-print {
+        display: none;
+        font-size: 13px;
+        width: 430px;
+        padding: 30px;
+        background-color: white;
+        color: black;
+        img {
+            width: 350px;
+            filter: grayscale(100%);
+        }
+        .rp-header, .rp-footer {
+            text-align: center;
+        }
+        .rp-main {
+            margin: 20px 0 20px 0;
+            table {
+                margin: 10px 0 10px 0;
+                width: 430px;
+                width: 100%;
+            }
+        }
+    }
+    @media print {
+        .parent {
+            display: none;
+        }
+        .recipt-print {
+            display: block;
+        }
+    }
+</style>
+<div class="recipt-print">
+    <center><img src="${pageContext.request.contextPath}/static/images/logo-row.png" alt="Logo Líder Médica"></center>
+    <div class="rp-header">
+        <span>LIDER MÉDICA S.A.</span><br>
+        <span>AREA DE FARMACIA</span><br>
+        <span>RUC: 20601443091 / Telefono: 967124423</span><br>
+        <span>AV. GRAU 680 - LA VICTORIA</span><br>
+        <span><b><u>COMPRA</u></b></span>
+    </div>
+    <div class="rp-main">
+        <span>Fecha Emisión: ${venta.getFechaFormateada().split(" ")[0]}</span><br>
+        <span>Hora Emisión: ${venta.getFechaFormateada().split(" ")[1]}</span><br>
+        <div style="display: flex; justify-content: space-between;">
+            <span>BOLETA DE VENTA</span>
+            <span>ID: ${venta.id}</span>
+        </div>
+        <table>
+            <thead style="border-top: dashed 1px; border-bottom: dashed 1px;">
+                <tr>
+                    <td>ITEM</td>
+                    <td>NOMBRE</td>
+                    <td>CANT</td>
+                    <td>PR UND</td>
+                    <td>TOTAL</td>
+                </tr>
+            </thead>
+            <tbody style="border-bottom: dashed 1px;">
+                <c:forEach var="detalle" items="${venta.detalles}">
+                    <tr>
+                        <td>${detalle.farmaco.id}</td>
+                        <td>${detalle.farmaco.nombre}</td>
+                        <td>${detalle.cantidad}</td>
+                        <td>${detalle.precio_unidad}</td>
+                        <td>S/${detalle.calcularTotal()}</td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL VENTA:</td>
+                    <td>S/${venta.getTotal()}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="border-bottom: dashed 1px;">
+            <tr>
+                <td>DNI:</td>
+                <td>${venta.dni_comprador}</td>
+            </tr>
+            <tr></tr>
+        </table>
+    </div>
+    <div class="rp-footer">
+        <span>Vendedor: ${venta.vendedor.nombres.toUpperCase()} ${venta.vendedor.getAp_paterno().toUpperCase()} ${venta.vendedor.getAp_materno().toUpperCase()}</span>
     </div>
 </div>
 </body>
