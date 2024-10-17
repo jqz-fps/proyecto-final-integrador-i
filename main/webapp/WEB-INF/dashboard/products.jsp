@@ -95,8 +95,9 @@
         </div>
       </div>
     </div>
-    <div style="padding: 20px;">
-      Usuario:
+    <div style="padding: 20px;display: flex;gap: 20px;align-items: center;justify-content: center;overflow: hidden;">
+      <i class="bi bi-person-circle" style="font-size: 50px;"></i>
+      Bienvenido <br>
       <%= usuario.getAp_paterno() %>, <%= usuario.getAp_materno() %>
     </div>
   </div>
