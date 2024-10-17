@@ -22,4 +22,8 @@ public class DetalleVenta {
     public float getPrecio_unidad() {
         return precio_unidad;
     }
+
+    public float calcularTotal() {
+        return cantidad * precio_unidad;
+    }
 }
