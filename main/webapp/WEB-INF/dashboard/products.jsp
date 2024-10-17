@@ -166,21 +166,21 @@
               <div class="row">
                 <div class="group col">
                   <label for="nombre" class="form-label oblig">Nombre</label>
-                  <input autocomplete="off" type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                  <input autocomplete="off" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                 </div>
                 <div class="group col">
                   <label for="presentacion" class="form-label oblig">Presentación</label>
-                  <input autocomplete="off" type="text" class="form-control" id="presentacion" placeholder="Presentación" required>
+                  <input autocomplete="off" type="text" class="form-control" name="presentacion" id="presentacion" placeholder="Presentación" required>
                 </div>
               </div><br>
               <div class="row">
                 <div class="group col">
                   <label for="composicion" class="form-label oblig">Composición</label>
-                  <input autocomplete="off" type="text" class="form-control" id="composicion" placeholder="Composición" required>
+                  <input autocomplete="off" type="text" class="form-control" name="composicion" id="composicion" placeholder="Composición" required>
                 </div>
                 <div class="group col">
                   <label for="precio" class="form-label oblig">Precio</label>
-                  <input autocomplete="off" type="text" class="form-control" id="precio" placeholder="Precio" required>
+                  <input autocomplete="off" type="text" class="form-control" name="precio" id="precio" placeholder="Precio" required>
                 </div>
                 <div class="group col">
                   <label for="stock" class="form-label oblig">Stock</label>
