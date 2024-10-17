@@ -1,6 +1,7 @@
 package pe.edu.utp.integradori.proyectofinal.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Venta {
@@ -36,5 +37,17 @@ public class Venta {
 
     public String getDni_comprador() {
         return dni_comprador;
+    }
+
+    public float getTotal() {
+        float total = 0;
+        for (DetalleVenta detalle : detalles) {
+            total += (detalle.getCantidad() * detalle.getPrecio_unidad());
+        }
+        return total;
+    }
+
+    public String getFechaFormateada() {
+        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }
