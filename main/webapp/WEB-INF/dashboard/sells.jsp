@@ -137,7 +137,7 @@
                         <td>${venta.dni_comprador}</td>
                         <td>${venta.getTotal()}</td>
                         <td>
-                            <form action="dashboard/sells/details" method="post">
+                            <form action="sells/details" method="post">
                                 <input type="text" style="display: none;" name="idVenta" value="${venta.id}">
                                 <button class="btn btn-secondary btn-sm" type="submit"><i class="bi bi-list-ol"></i> Detalles</button>
                             </form>
