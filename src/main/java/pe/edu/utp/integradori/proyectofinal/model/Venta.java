@@ -3,15 +3,23 @@ package pe.edu.utp.integradori.proyectofinal.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.*;
 
 public class Venta {
     private int id;
     private Trabajador vendedor;
-    private ArrayList<DetalleVenta> detalles;
+    private List<DetalleVenta> detalles;
     private LocalDateTime fecha;
     private String dni_comprador;
 
-    public Venta(int id, Trabajador vendedor, ArrayList<DetalleVenta> detalles, LocalDateTime fecha, String dni_comprador) {
+    public Venta(int id, Trabajador vendedor, List<DetalleVenta> detalles, LocalDateTime fecha, String dni_comprador) {
+        checkArgument(id > 0, "El id debe ser mayor a cero");
+        checkNotNull(vendedor, "El vendedor no puede ser nulo");
+        checkNotNull(detalles, "El arreglo de detalles no puede ser nulo");
+        checkNotNull(fecha, "La fecha no puede ser nula");
+        checkNotNull(dni_comprador, "El dni del comprador no puede ser nulo");
         this.id = id;
         this.vendedor = vendedor;
         this.detalles = detalles;
@@ -27,7 +35,7 @@ public class Venta {
         return vendedor;
     }
 
-    public ArrayList<DetalleVenta> getDetalles() {
+    public List<DetalleVenta> getDetalles() {
         return detalles;
     }
 

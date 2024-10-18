@@ -1,5 +1,6 @@
 package pe.edu.utp.integradori.proyectofinal.controller.dashboard;
 
+import com.google.common.collect.ImmutableList;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,16 +23,20 @@ public class SellDetailsServlet extends HttpServlet {
         Trabajador trabajador = new Trabajador(123, "123445678",
                 "Juan", "Alberto", "AdminMat", 'M', LocalDateTime.now(), LocalDateTime.now(),
                 new ArrayList<Rol>(), new ArrayList<Venta>());
-        ArrayList<DetalleVenta> detallesVenta = new ArrayList<>();
-        detallesVenta.add(new DetalleVenta(new Farmaco(1, null, null, null, 50,
+        Laboratorio laboratorio = new Laboratorio(1, "XYZ");
+        Distribuidora distribuidora = new Distribuidora(1, "America SA", "Disfarma", "", "");
+        Categoria categoria = new Categoria(1, "Antibiótico");
+        ArrayList<DetalleVenta> detallesVentaAL = new ArrayList<>();
+        detallesVentaAL.add(new DetalleVenta(new Farmaco(1, laboratorio, categoria, distribuidora, 50,
                 "Amoxicilina", "500 mg", "Amoxicilina", "Cápsula",
                 49.99f), (byte) 2, 2.99F));
-        detallesVenta.add(new DetalleVenta(new Farmaco(4, null, null, null, 50,
-                "Ibuprofeno", "500 mg", "Ibuprofeno", "Cápsula",
+        detallesVentaAL.add(new DetalleVenta(new Farmaco(3, laboratorio, categoria, distribuidora, 50,
+                "Amoxicilina", "500 mg", "Amoxicilina", "Cápsula",
                 49.99f), (byte) 2, 2.99F));
-        detallesVenta.add(new DetalleVenta(new Farmaco(2, null, null, null, 50,
-                "Aspirina", "500 mg", "Aspirina", "Cápsula",
+        detallesVentaAL.add(new DetalleVenta(new Farmaco(2, laboratorio, categoria, distribuidora, 50,
+                "Amoxicilina", "500 mg", "Amoxicilina", "Cápsula",
                 49.99f), (byte) 2, 2.99F));
+        ImmutableList<DetalleVenta> detallesVenta = ImmutableList.copyOf(detallesVentaAL);
         Venta venta = new Venta(1, trabajador, detallesVenta, LocalDateTime.now(), "72506993");
         request.setAttribute("venta", venta);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/dashboard/selldetails.jsp");

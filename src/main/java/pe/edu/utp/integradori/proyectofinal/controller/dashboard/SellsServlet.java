@@ -1,5 +1,6 @@
 package pe.edu.utp.integradori.proyectofinal.controller.dashboard;
 
+import com.google.common.collect.ImmutableList;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,13 +25,14 @@ public class SellsServlet extends HttpServlet {
         Trabajador trabajador = new Trabajador(123, "123445678",
                 "Juan", "Alberto", "AdminMat", 'M', LocalDateTime.now(), LocalDateTime.now(),
                 new ArrayList<Rol>(), new ArrayList<Venta>());
-        ArrayList<Venta> ventas = new ArrayList();
-        ventas.add(new Venta(1, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
-        ventas.add(new Venta(2, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
-        ventas.add(new Venta(3, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
-        ventas.add(new Venta(4, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
-        ventas.add(new Venta(5, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
-        ventas.add(new Venta(6, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ArrayList<Venta> ventasAL = new ArrayList();
+        ventasAL.add(new Venta(1, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ventasAL.add(new Venta(2, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ventasAL.add(new Venta(3, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ventasAL.add(new Venta(4, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ventasAL.add(new Venta(5, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ventasAL.add(new Venta(6, trabajador, new ArrayList<DetalleVenta>(), LocalDateTime.now(), "72506993"));
+        ImmutableList<Venta> ventas = ImmutableList.copyOf(ventasAL);
 
         request.setAttribute("ventasCargadas", ventas);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/dashboard/sells.jsp");

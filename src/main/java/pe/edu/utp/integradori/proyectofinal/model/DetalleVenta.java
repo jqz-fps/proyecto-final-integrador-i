@@ -1,11 +1,16 @@
 package pe.edu.utp.integradori.proyectofinal.model;
 
+import static com.google.common.base.Preconditions.*;
+
 public class DetalleVenta {
     private Farmaco farmaco;
     private byte cantidad;
     private float precio_unidad;
 
     public DetalleVenta(Farmaco farmaco, byte cantidad, float precio_unidad) {
+        checkNotNull(farmaco, "El farmaco no puede ser nulo");
+        checkArgument(cantidad > 0, "La cantidad debe ser mayor a cero");
+        checkArgument(precio_unidad > 0, "El precio debe ser mayor a cero");
         this.farmaco = farmaco;
         this.cantidad = cantidad;
         this.precio_unidad = precio_unidad;
