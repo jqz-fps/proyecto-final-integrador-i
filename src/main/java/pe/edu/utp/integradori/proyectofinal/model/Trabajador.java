@@ -2,6 +2,7 @@ package pe.edu.utp.integradori.proyectofinal.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -14,12 +15,12 @@ public class Trabajador {
     private char genero;
     private LocalDateTime fecha_nacimiento;
     private LocalDateTime fecha_registro;
-    private ArrayList<Rol> roles;
-    private ArrayList<Venta> ventas;
+    private List<Rol> roles;
+    private List<Venta> ventas;
 
     public Trabajador(int id, String dni, String nombres, String ap_paterno,
                       String ap_materno, char genero, LocalDateTime fecha_nacimiento,
-                      LocalDateTime fecha_registro, ArrayList<Rol> roles, ArrayList<Venta> ventas) {
+                      LocalDateTime fecha_registro, List<Rol> roles, List<Venta> ventas) {
         checkNotNull(dni, "El dni no puede ser nulo");
         checkNotNull(nombres, "El nombre no puede ser nulo");
         checkNotNull(ap_paterno, "El apellido paterno no puede ser nulo");
@@ -70,7 +71,7 @@ public class Trabajador {
         return fecha_registro;
     }
 
-    public ArrayList<Rol> getRoles() {
+    public List<Rol> getRoles() {
         return roles;
     }
 
@@ -78,7 +79,7 @@ public class Trabajador {
         return roles.contains(rol);
     }
 
-    public ArrayList<Venta> getVentas() {
+    public List<Venta> getVentas() {
         return ventas;
     }
 
