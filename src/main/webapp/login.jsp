@@ -54,11 +54,11 @@
             <h3 class="text-center">Iniciar Sesión</h3>
             <div>
                 <span>Usuario</span><br><br>
-                <input type="text" autocomplete="off" class="form-control" name="username" placeholder="Usuario">
+                <input type="text" autocomplete="off" class="form-control" name="username" placeholder="Correo electrónico">
             </div>
             <div>
                 <span>Contraseña</span><br><br>
-                <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                <input type="password" class="form-control" name="password" placeholder="Ingresar contraseña">
             </div>
             <c:if test="${not empty error}">
                 ${error}
