@@ -21,7 +21,7 @@ public class SellDetailsServlet extends HttpServlet {
         VentaDAOImpl ventaDAO = new VentaDAOImpl();
         Venta venta = ventaDAO.read(idVenta);
         Trabajador trabajador = (Trabajador) request.getSession().getAttribute("usuario");
-        if(trabajador.getId() != venta.getVendedor().getId()){
+        if(trabajador.getId() != venta.getVendedor().getId() && !trabajador.getRoles().contains(Rol.Supervisor)) {
             response.sendRedirect(request.getContextPath() + "/dashboard/sells");
             return;
         }
