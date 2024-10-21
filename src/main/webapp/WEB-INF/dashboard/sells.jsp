@@ -1,12 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="pe.edu.utp.integradori.proyectofinal.model.Trabajador" %>
+<%@ page import="pe.edu.utp.integradori.proyectofinal.model.Rol" %>
 <%
     if (session == null || session.getAttribute("usuario") == null) {
         response.sendRedirect(request.getContextPath() + "/login");
         return;
     }
     Trabajador usuario = (Trabajador) session.getAttribute("usuario");
+
+    boolean esSupervisor = false;
+    for (Rol rol : usuario.getRoles()) {
+        if (rol == Rol.Supervisor) {
+            esSupervisor = true;
+            break;
+        }
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -98,7 +107,7 @@
         <div style="padding: 20px;display: flex;gap: 20px;align-items: center;justify-content: center;overflow: hidden;">
             <i class="bi bi-person-circle" style="font-size: 50px;"></i>
             Bienvenido <br>
-            <%= usuario.getAp_paterno() %>, <%= usuario.getAp_materno() %>
+            <%= usuario.getAp_paterno() %>, <%= usuario.getNombres() %>
         </div>
     </div>
     <div class="dashboard">
