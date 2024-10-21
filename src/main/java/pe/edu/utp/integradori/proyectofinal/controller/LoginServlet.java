@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import pe.edu.utp.integradori.proyectofinal.dao.TrabajadorDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.Rol;
 import pe.edu.utp.integradori.proyectofinal.model.Trabajador;
 import pe.edu.utp.integradori.proyectofinal.model.Venta;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -36,14 +38,10 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         request.getSession().removeAttribute("error");
 
-        if ("admin".equals(username) && "admin".equals(password)) {
-            ArrayList<Rol> roles = new ArrayList<>();
-            roles.add(Rol.Supervisor);
-            roles.add(Rol.Vendedor);
-            Trabajador trabajador = new Trabajador(123, "123445678",
-                    "Admin", "AdminPat", "AdminMat", 'M', LocalDateTime.now(), LocalDateTime.now(),
-                    roles, new ArrayList<Venta>());
+        TrabajadorDAOImpl dao = new TrabajadorDAOImpl();
+        Trabajador trabajador = dao.readLogin(username, password);
 
+        if (trabajador != null) {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", trabajador);
 
