@@ -1,12 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="pe.edu.utp.integradori.proyectofinal.model.Trabajador" %>
+<%@ page import="pe.edu.utp.integradori.proyectofinal.model.Rol" %>
 <%
   if (session == null || session.getAttribute("usuario") == null) {
     response.sendRedirect(request.getContextPath() + "/login");
     return;
   }
   Trabajador usuario = (Trabajador) session.getAttribute("usuario");
+
+  boolean esSupervisor = false;
+  for (Rol rol : usuario.getRoles()) {
+    if (rol == Rol.Supervisor) {
+      esSupervisor = true;
+      break;
+    }
+  }
 %>
 <!DOCTYPE html>
 <html>
@@ -98,7 +107,7 @@
     <div style="padding: 20px;display: flex;gap: 20px;align-items: center;justify-content: center;overflow: hidden;">
       <i class="bi bi-person-circle" style="font-size: 50px;"></i>
       Bienvenido <br>
-      <%= usuario.getAp_paterno() %>, <%= usuario.getAp_materno() %>
+      <%= usuario.getAp_paterno() %>, <%= usuario.getNombres() %>
     </div>
   </div>
   <div class="dashboard">
@@ -111,21 +120,67 @@
           <input autocomplete="off" type="text" placeholder="Buscar..." class="form-control" (input)="applyFilter($event)">
         </div>
       </div>
+      <% if (esSupervisor) { %>
       <div class="right">
-        <div class="select-container">
-          <i class="bi bi-shop"></i>
-          <select name="laboratorio" id="laboratorio" class="form-select">
-            <option value="laboratorio" style="display: none;">Laboratorio</option>
-          </select>
-        </div>
-        <div class="select-container">
-          <i class="bi bi-funnel"></i>
-          <select name="categoria" id="categoria" class="form-select">
-            <option value="categoria" style="display: none;">Categoria</option>
-          </select>
-        </div>
         <button class="btn btn-tertiary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-plus"></i> Medicamento</button>
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Agregar producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post">
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="group col">
+                      <label for="nombre" class="form-label oblig">Nombre</label>
+                      <input autocomplete="off" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="group col">
+                      <label for="presentacion" class="form-label oblig">Presentación</label>
+                      <input autocomplete="off" type="text" class="form-control" name="presentacion" id="presentacion" placeholder="Presentación" required>
+                    </div>
+                  </div><br>
+                  <div class="row">
+                    <div class="group col">
+                      <label for="composicion" class="form-label oblig">Composición</label>
+                      <input autocomplete="off" type="text" class="form-control" name="composicion" id="composicion" placeholder="Composición" required>
+                    </div>
+                    <div class="group col">
+                      <label for="precio" class="form-label oblig">Precio</label>
+                      <input autocomplete="off" type="text" class="form-control" name="precio" id="precio" placeholder="Precio" required>
+                    </div>
+                    <div class="group col">
+                      <label for="stock" class="form-label oblig">Stock</label>
+                      <input autocomplete="off" type="text" class="form-control" id="stock" name="stock" placeholder="Stock" required>
+                    </div>
+                  </div><br>
+                  <div class="row">
+                    <div class="group col">
+                      <label for="laboratorio" class="form-label oblig">Laboratorio</label>
+                      <select name="laboratorio" id="laboratorio" class="form-select" required>
+                        <option value="laboratorio" style="display: none;">Laboratorio</option>
+                      </select>
+                    </div>
+                    <div class="group col">
+                      <label for="categoria" class="form-label">Categoria</label>
+                      <select name="categoria" id="categoria" class="form-select" required>
+                        <option value="categoria" style="display: none;">Categoria</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-tertiary">Agregar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
+      <% } %>
     </div>
 
     <div>
@@ -153,63 +208,6 @@
           </c:forEach>
         </tbody>
       </table>
-    </div>
-
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addModalLabel">Agregar producto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form method="post">
-          <div class="modal-body">
-              <div class="row">
-                <div class="group col">
-                  <label for="nombre" class="form-label oblig">Nombre</label>
-                  <input autocomplete="off" type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
-                </div>
-                <div class="group col">
-                  <label for="presentacion" class="form-label oblig">Presentación</label>
-                  <input autocomplete="off" type="text" class="form-control" name="presentacion" id="presentacion" placeholder="Presentación" required>
-                </div>
-              </div><br>
-              <div class="row">
-                <div class="group col">
-                  <label for="composicion" class="form-label oblig">Composición</label>
-                  <input autocomplete="off" type="text" class="form-control" name="composicion" id="composicion" placeholder="Composición" required>
-                </div>
-                <div class="group col">
-                  <label for="precio" class="form-label oblig">Precio</label>
-                  <input autocomplete="off" type="text" class="form-control" name="precio" id="precio" placeholder="Precio" required>
-                </div>
-                <div class="group col">
-                  <label for="stock" class="form-label oblig">Stock</label>
-                  <input autocomplete="off" type="text" class="form-control" id="stock" name="stock" placeholder="Stock" required>
-                </div>
-              </div><br>
-              <div class="row">
-                <div class="group col">
-                  <label for="laboratorio" class="form-label oblig">Laboratorio</label>
-                  <select name="laboratorio" id="laboratorio" class="form-select" required>
-                    <option value="laboratorio" style="display: none;">Laboratorio</option>
-                  </select>
-                </div>
-                <div class="group col">
-                  <label for="categoria" class="form-label">Categoria</label>
-                  <select name="categoria" id="categoria" class="form-select" required>
-                    <option value="categoria" style="display: none;">Categoria</option>
-                  </select>
-                </div>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-tertiary">Agregar</button>
-          </div>
-        </form>
-        </div>
-      </div>
     </div>
 
   </div>
