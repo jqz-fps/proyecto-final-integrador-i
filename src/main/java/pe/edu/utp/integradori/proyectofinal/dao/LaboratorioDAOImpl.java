@@ -4,6 +4,7 @@ import pe.edu.utp.integradori.proyectofinal.interfaces.LaboratorioDAO;
 import pe.edu.utp.integradori.proyectofinal.model.Laboratorio;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class LaboratorioDAOImpl implements LaboratorioDAO {
     @Override
@@ -24,5 +25,10 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     @Override
     public void delete(Integer id) throws SQLException {
 
+    }
+
+    @Override
+    public List<Laboratorio> readAll() {
+        return List.of();
     }
 }

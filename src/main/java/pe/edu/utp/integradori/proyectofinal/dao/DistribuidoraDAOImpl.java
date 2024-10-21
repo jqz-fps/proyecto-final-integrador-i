@@ -4,6 +4,7 @@ import pe.edu.utp.integradori.proyectofinal.interfaces.DistribuidoraDAO;
 import pe.edu.utp.integradori.proyectofinal.model.Distribuidora;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DistribuidoraDAOImpl implements DistribuidoraDAO {
     @Override
@@ -24,5 +25,10 @@ public class DistribuidoraDAOImpl implements DistribuidoraDAO {
     @Override
     public void delete(Integer id) throws SQLException {
 
+    }
+
+    @Override
+    public List<Distribuidora> readAll() {
+        return List.of();
     }
 }

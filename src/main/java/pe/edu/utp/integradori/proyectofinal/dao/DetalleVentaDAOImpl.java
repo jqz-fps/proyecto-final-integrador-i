@@ -4,6 +4,7 @@ import pe.edu.utp.integradori.proyectofinal.interfaces.DetalleVentaDAO;
 import pe.edu.utp.integradori.proyectofinal.model.DetalleVenta;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DetalleVentaDAOImpl implements DetalleVentaDAO {
     @Override
@@ -24,5 +25,10 @@ public class DetalleVentaDAOImpl implements DetalleVentaDAO {
     @Override
     public void delete(Integer id) throws SQLException {
 
+    }
+
+    @Override
+    public List<DetalleVenta> readAll() {
+        return List.of();
     }
 }
