@@ -1,11 +1,13 @@
 package pe.edu.utp.integradori.proyectofinal.model;
 
+import java.util.List;
+
 import static com.google.common.base.Preconditions.*;
 
 public class Farmaco {
     private int id;
     private Laboratorio laboratorio;
-    private Categoria categoria;
+    private List<Categoria> categorias;
     private Distribuidora distribuidora;
     private int stock;
     private String nombre;
@@ -14,13 +16,10 @@ public class Farmaco {
     private String composicion;
     private float precio;
 
-    public Farmaco(int id, Laboratorio laboratorio, Categoria categoria,
+    public Farmaco(int id, Laboratorio laboratorio, List<Categoria> categorias,
                    Distribuidora distribuidora, int stock, String nombre, String descripcion,
                    String presentacion, String composicion, float precio) {
         checkArgument(id > 0, "El id debe ser mayor a cero");
-        checkNotNull(laboratorio, "El laboratorio no puede ser nulo");
-        checkNotNull(categoria, "La categoria no puede ser nula");
-        checkNotNull(distribuidora, "La distribuidora no puede ser nula");
         checkArgument(stock > 0, "El stock debe ser mayor a cero");
         checkNotNull(nombre, "El nombre no puede ser nulo");
         checkNotNull(descripcion, "La descripcion no puede ser nula");
@@ -29,7 +28,7 @@ public class Farmaco {
         checkArgument(precio > 0, "El precio debe ser mayor a cero");
         this.id = id;
         this.laboratorio = laboratorio;
-        this.categoria = categoria;
+        this.categorias = categorias;
         this.distribuidora = distribuidora;
         this.stock = stock;
         this.nombre = nombre;
@@ -47,8 +46,8 @@ public class Farmaco {
         return laboratorio;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public List<Categoria> getCategoria() {
+        return categorias;
     }
 
     public Distribuidora getDistribuidora() {
