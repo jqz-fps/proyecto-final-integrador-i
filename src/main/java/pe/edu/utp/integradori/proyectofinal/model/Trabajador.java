@@ -1,5 +1,6 @@
 package pe.edu.utp.integradori.proyectofinal.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,14 @@ public class Trabajador {
     private String ap_paterno;
     private String ap_materno;
     private char genero;
-    private LocalDateTime fecha_nacimiento;
-    private LocalDateTime fecha_registro;
+    private LocalDate fecha_nacimiento;
+    private LocalDate fecha_registro;
     private List<Rol> roles;
     private List<Venta> ventas;
 
     public Trabajador(int id, String dni, String nombres, String ap_paterno,
-                      String ap_materno, char genero, LocalDateTime fecha_nacimiento,
-                      LocalDateTime fecha_registro, List<Rol> roles, List<Venta> ventas) {
+                      String ap_materno, char genero, LocalDate fecha_nacimiento,
+                      LocalDate fecha_registro, List<Rol> roles, List<Venta> ventas) {
         checkNotNull(dni, "El dni no puede ser nulo");
         checkNotNull(nombres, "El nombre no puede ser nulo");
         checkNotNull(ap_paterno, "El apellido paterno no puede ser nulo");
@@ -63,11 +64,11 @@ public class Trabajador {
         return genero;
     }
 
-    public LocalDateTime getFecha_nacimiento() {
+    public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public LocalDateTime getFecha_registro() {
+    public LocalDate getFecha_registro() {
         return fecha_registro;
     }
 
