@@ -20,7 +20,7 @@ public class Farmaco {
                    Distribuidora distribuidora, int stock, String nombre, String descripcion,
                    String presentacion, String composicion, float precio) {
         checkArgument(id > 0, "El id debe ser mayor a cero");
-        checkArgument(stock > 0, "El stock debe ser mayor a cero");
+        checkArgument(stock > -1, "El stock debe ser mayor a cero");
         checkNotNull(nombre, "El nombre no puede ser nulo");
         checkNotNull(descripcion, "La descripcion no puede ser nula");
         checkNotNull(presentacion, "La presentacion no puede ser nula");
@@ -76,5 +76,49 @@ public class Farmaco {
 
     public float getPrecio() {
         return precio;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public void setDistribuidora(Distribuidora distribuidora) {
+        this.distribuidora = distribuidora;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public void setComposicion(String composicion) {
+        this.composicion = composicion;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 }

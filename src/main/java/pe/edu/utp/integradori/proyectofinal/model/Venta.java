@@ -58,4 +58,35 @@ public class Venta {
     public String getFechaFormateada() {
         return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setVendedor(Trabajador vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public void setDetalles(List<DetalleVenta> detalles) {
+        this.detalles = detalles;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setDni_comprador(String dni_comprador) {
+        this.dni_comprador = dni_comprador;
+    }
+
+    @Override
+    public String toString() {
+        return "Venta{" +
+                "id=" + id +
+                ", vendedor=" + vendedor +
+                ", detalles=" + detalles +
+                ", fecha=" + fecha +
+                ", dni_comprador='" + dni_comprador + '\'' +
+                '}';
+    }
 }

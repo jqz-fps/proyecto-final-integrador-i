@@ -8,7 +8,6 @@ public class DetalleVenta {
     private float precio_unidad;
 
     public DetalleVenta(Farmaco farmaco, byte cantidad, float precio_unidad) {
-        checkNotNull(farmaco, "El farmaco no puede ser nulo");
         checkArgument(cantidad > 0, "La cantidad debe ser mayor a cero");
         checkArgument(precio_unidad > 0, "El precio debe ser mayor a cero");
         this.farmaco = farmaco;
@@ -30,5 +29,14 @@ public class DetalleVenta {
 
     public float calcularTotal() {
         return cantidad * precio_unidad;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleVenta{" +
+                "farmaco=" + farmaco +
+                ", cantidad=" + cantidad +
+                ", precio_unidad=" + precio_unidad +
+                '}';
     }
 }
