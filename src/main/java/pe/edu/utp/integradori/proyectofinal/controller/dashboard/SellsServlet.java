@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,8 @@ public class SellsServlet extends HttpServlet {
         if(!trabajador.getRoles().contains(Rol.Supervisor))
             // Si el usuario no es supervisor entonces solo se muestran las ventas que pertenecen al usuario
             ventas.removeIf(venta -> venta.getVendedor().getId() != trabajador.getId());
+
+        ventas.sort(Comparator.comparing(Venta::getId).reversed());
 
         request.setAttribute("ventasCargadas", ventas);
         request.setAttribute("productosCargados", productos);
