@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.validator.routines.RegexValidator;
 import pe.edu.utp.integradori.proyectofinal.dao.FarmacoDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.*;
@@ -49,6 +50,16 @@ public class SellsServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, String[]> parametersMap = request.getParameterMap();
         String dniComprador = parametersMap.get("dnicomprador")[0];
+
+        RegexValidator dniValidator = new RegexValidator("^\\d{8}$");
+
+        if (!dniValidator.isValid(dniComprador)) {
+            request.getSession().setAttribute("errorDNI", "<div class=\"alert alert-danger\">\n" +
+                    "  <strong>El DNI ingresado no es válido. Debe tener 8 dígitos.</strong>\n" +
+                    "</div>");
+            response.sendRedirect(request.getContextPath() + "/dashboard/sells");
+            return;
+        }
 
         Venta venta = new Venta(
                 1,

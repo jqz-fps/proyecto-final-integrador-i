@@ -129,7 +129,20 @@
                 <button class="btn btn-tertiary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-plus"></i> Venta</button>
             </div>
         </div>
-
+        <c:if test="${not empty sessionScope.errorDNI}">
+            ${sessionScope.errorDNI}
+            <script>
+                setTimeout(function() {
+                    var alert = document.querySelector('.alert');
+                    if (alert) {
+                        alert.remove();
+                    }
+                }, 5000);
+            </script>
+            <%
+                session.removeAttribute("errorDNI");
+            %>
+        </c:if>
         <div>
             <table>
                 <thead>
