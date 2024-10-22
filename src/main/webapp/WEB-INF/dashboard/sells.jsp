@@ -158,7 +158,7 @@
         </div>
 
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addModalLabel">Crear nueva venta</h5>
@@ -172,40 +172,70 @@
                                     <input autocomplete="off" type="text" class="form-control" name="dnicomprador" id="dnicomprador" placeholder="DNI" required>
                                 </div>
                             </div><br>
-                            <div class="modal-products">
-                                <h5>Productos:</h5>
+                            <h5>Productos:</h5>
+                            <div class="modal-products" style="max-height: 190px;overflow-y: scroll;overflow-x:hidden">
                                 <div class="product-row">
                                     <label class="oblig">Producto 1:</label>
                                     <div class="row">
-                                        <div class="group col">
-                                            <input type="number" name="idp1" id="idp1" class="form-control" placeholder="ID" required>
+                                        <div class="group col-md-8">
+                                            <select name="idp1" id="idp1" class="form-control" required>
+                                                <c:forEach var="producto" items="${productosCargados}">
+                                                    <option value="${producto.id}">${producto.getId()} - ${producto.getNombre()}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                         <div class="group col">
-                                            <input type="number" name="cantidadp1" id="cantidadp1" class="form-control" placeholder="Cantidad" required>
+                                            <input type="number" name="cantidadp1" id="cantidadp1" class="form-control" placeholder="Cantidad" min="0" required>
                                         </div>
                                     </div>
                                 </div>
+                                <style>
+                                    .product-row {
+                                        margin-top: 20px;
+                                    }
+                                </style>
                                 <script>
-                                    let prodActual = 1
+                                    let prodActual = 1;
+                                    
                                     function addProductRow() {
                                         prodActual++;
-                                        document.querySelector('.modal-products').innerHTML += `
-                                        <br><div class="product-row">
-                                        <label class="oblig">Producto ` + prodActual + `:</label>
-                                        <div class="row">
-                                            <div class="group col">
-                                                <input type="number" name="idp` + prodActual + `" id="idp` + prodActual + `" class="form-control" placeholder="ID" required>
+                                        const productos = `
+                                        <div class="product-row">
+                                            <label class="oblig">Producto ` + prodActual + `:</label>
+                                            <div class="row">
+                                                <div class="group col-md-8">
+                                                    <select name="idp` + prodActual + `" id="idp` + prodActual + `" class="form-control" required>
+                                                        <c:forEach var="producto" items="${productosCargados}">
+                                                            <option value="${producto.id}">${producto.id} - ${producto.nombre}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="group col">
+                                                    <input type="number" name="cantidadp` + prodActual + `" id="cantidadp` + prodActual + `" class="form-control" placeholder="Cantidad" min="0" required>
+                                                </div>
                                             </div>
-                                            <div class="group col">
-                                                <input type="number" name="cantidadp` + prodActual + `" id="cantidadp` + prodActual + `" class="form-control" placeholder="Cantidad" required>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        `
+                                        </div>`;
+                                        
+                                        document.querySelector('.modal-products').innerHTML += productos;
+                                    }
+                                
+                                    function removeLastRow() {
+                                        const productRows = document.querySelectorAll('.modal-products .product-row');
+                                        if (productRows.length > 1) {
+                                            productRows[productRows.length - 1].remove();
+                                            prodActual--;
+                                        }
                                     }
                                 </script>
                             </div><br>
-                            <button type="button" class="btn btn-tertiary" style="border-radius: 50%;" onclick="addProductRow()">+</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-tertiary" style="border-radius: 50%;" onclick="removeLastRow()">-</button>
+                                </div>
+                                <div class="col-md-6" style="display: flex;justify-content: end;">
+                                    <button type="button" class="btn btn-tertiary" style="border-radius: 50%;" onclick="addProductRow()">+</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
