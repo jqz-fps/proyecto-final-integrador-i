@@ -22,59 +22,47 @@ public class VentaDAOImpl extends Conexion implements VentaDAO {
                 throw new RuntimeException("El stock de " + farmaco.getNombre() + " es insuficiente");
             }
         }
-
-        Connection conn = null;  // Mueve la declaración fuera del try-with-resources
-
+        Connection conn = null;
         try {
-            // Conexión a la base de datos
             conn = getConnection();
 
-            // Hacer las operaciones dentro de una transacción
-            conn.setAutoCommit(false);  // Desactiva el auto-commit para manejar la transacción manualmente
-
-            // Paso 1: Insertar la venta usando el procedimiento almacenado
+            conn.setAutoCommit(false);
             String callInsertVenta = "{CALL InsertarVenta(?, ?, ?)}";
             int idVenta = 0;
             try (CallableStatement stmt = conn.prepareCall(callInsertVenta)) {
-                stmt.setInt(1, venta.getVendedor().getId());  // id_vendedor
-                stmt.setString(2, venta.getDni_comprador());  // dni_comprador
+                stmt.setInt(1, venta.getVendedor().getId());
+                stmt.setString(2, venta.getDni_comprador());
                 LocalDateTime fecha = venta.getFecha();
                 String formattedFecha = fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 stmt.setString(3, formattedFecha);
 
-                // Ejecutar el procedimiento y obtener el ID generado
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        idVenta = rs.getInt("id_venta");  // Recoge el ID de la venta insertada
+                        idVenta = rs.getInt("id_venta");
                     }
                 }
             }
 
-            // Paso 2: Insertar los detalles de la venta
             String queryDetalles = "INSERT INTO detalleventa (id_venta, id_farmaco, cantidad, precio_unidad) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmtDetalles = conn.prepareStatement(queryDetalles)) {
                 for (DetalleVenta detalle : venta.getDetalles()) {
-                    // Actualizar el stock de los fármacos usando el DAO
                     FarmacoDAOImpl farmacoDAO = new FarmacoDAOImpl();
                     detalle.getFarmaco().setStock(detalle.getFarmaco().getStock() - detalle.getCantidad());
                     farmacoDAO.update(detalle.getFarmaco());
 
-                    stmtDetalles.setInt(1, idVenta);                       // id_venta
-                    stmtDetalles.setInt(2, detalle.getFarmaco().getId());   // id_farmaco
-                    stmtDetalles.setByte(3, detalle.getCantidad());         // cantidad
-                    stmtDetalles.setFloat(4, detalle.getPrecio_unidad());   // precio_unidad
-                    stmtDetalles.addBatch();  // Añadir la operación al batch
+                    stmtDetalles.setInt(1, idVenta);
+                    stmtDetalles.setInt(2, detalle.getFarmaco().getId());
+                    stmtDetalles.setByte(3, detalle.getCantidad());
+                    stmtDetalles.setFloat(4, detalle.getPrecio_unidad());
+                    stmtDetalles.addBatch();
                 }
 
-                // Ejecutar batch de inserciones de detalles
                 stmtDetalles.executeBatch();
             }
 
-            // Si todo salió bien, hacer commit de la transacción
             conn.commit();
 
         } catch (SQLException e) {
-            // En caso de error, hacer rollback de la transacción
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -84,7 +72,6 @@ public class VentaDAOImpl extends Conexion implements VentaDAO {
             }
             throw new RuntimeException("Error al crear la venta", e);
         } finally {
-            // Asegurarse de cerrar la conexión si no se usa try-with-resources
             if (conn != null) {
                 try {
                     conn.close();
