@@ -75,11 +75,8 @@ public class TrabajadorDAOImpl extends Conexion implements TrabajadorDAO {
         return null;
     }
 
-
-
-
     @Override
-    public void update(Integer id) throws SQLException {
+    public void update(Trabajador trabajador) throws SQLException {
 
     }
 

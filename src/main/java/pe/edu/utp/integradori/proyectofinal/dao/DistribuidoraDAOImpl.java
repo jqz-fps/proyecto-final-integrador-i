@@ -18,7 +18,7 @@ public class DistribuidoraDAOImpl implements DistribuidoraDAO {
     }
 
     @Override
-    public void update(Integer id) throws SQLException {
+    public void update(Distribuidora distribuidora) throws SQLException {
 
     }
 

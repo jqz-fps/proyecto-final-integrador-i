@@ -18,7 +18,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     }
 
     @Override
-    public void update(Integer id) throws SQLException {
+    public void update(Laboratorio laboratorio) throws SQLException {
 
     }
 

@@ -56,9 +56,21 @@ public class FarmacoDAOImpl extends Conexion implements FarmacoDAO {
     }
 
     @Override
-    public void update(Integer id) throws SQLException {
-
+    public void update(Farmaco farmaco) throws SQLException {
+        String query = "UPDATE farmaco SET nombre = ?, descripcion = ?, presentacion = ?, composicion = ?, precio = ?, stock = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, farmaco.getNombre());
+            stmt.setString(2, farmaco.getDescripcion());
+            stmt.setString(3, farmaco.getPresentacion());
+            stmt.setString(4, farmaco.getComposicion());
+            stmt.setFloat(5, farmaco.getPrecio());
+            stmt.setInt(6, farmaco.getStock());
+            stmt.setInt(7, farmaco.getId());
+            stmt.executeUpdate();
+        }
     }
+
 
     @Override
     public void delete(Integer id) throws SQLException {

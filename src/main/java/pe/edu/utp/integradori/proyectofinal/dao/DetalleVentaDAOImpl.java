@@ -18,7 +18,7 @@ public class DetalleVentaDAOImpl implements DetalleVentaDAO {
     }
 
     @Override
-    public void update(Integer id) throws SQLException {
+    public void update(DetalleVenta detalleVenta) throws SQLException {
 
     }
 

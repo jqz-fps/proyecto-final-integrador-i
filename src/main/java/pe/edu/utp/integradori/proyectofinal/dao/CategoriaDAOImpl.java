@@ -23,7 +23,7 @@ public class CategoriaDAOImpl extends Conexion implements CategoriaDAO {
     }
 
     @Override
-    public void update(Integer id) throws SQLException {
+    public void update(Categoria categoria) throws SQLException {
 
     }
 
