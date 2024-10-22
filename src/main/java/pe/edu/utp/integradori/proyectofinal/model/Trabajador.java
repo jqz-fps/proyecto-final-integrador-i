@@ -84,4 +84,8 @@ public class Trabajador {
         return ventas;
     }
 
+    public String getApellidos() {
+        return ap_paterno + " " + ap_materno;
+    }
+
 }
