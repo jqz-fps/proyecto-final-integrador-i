@@ -70,7 +70,7 @@
       </div>
       <c:if test="${usuario != null && usuario.hasRole('Supervisor')}">
         <div class="radio">
-          <a href="supervition" class="sidebar-label">
+          <a href="supervition/workers" class="sidebar-label">
             <i class="bi bi-person-fill-lock"></i>
             <span>Panel de supervisores</span>
           </a>
