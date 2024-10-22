@@ -121,6 +121,11 @@
                 </div>
             </div>
             <div class="right">
+                <% if (esSupervisor) { %>
+                    <form action="${pageContext.request.contextPath}/dashboard/sells/download" method="post">
+                        <button class="btn btn-tertiary" type="submit"><i class="bi bi-download"></i> Descargar XLSX</button>
+                    </form>
+                <% } %>
                 <button class="btn btn-tertiary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-plus"></i> Venta</button>
             </div>
         </div>
