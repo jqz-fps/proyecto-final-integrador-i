@@ -54,7 +54,7 @@
             <h3 class="text-center">Iniciar Sesión</h3>
             <div>
                 <span>Usuario</span><br><br>
-                <input type="text" autocomplete="off" class="form-control" name="username" placeholder="Correo electrónico">
+                <input type="text" autocomplete="off" class="form-control" name="username" placeholder="Correo electrónico o usuario">
             </div>
             <div>
                 <span>Contraseña</span><br><br>
