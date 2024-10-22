@@ -2,6 +2,7 @@ package pe.edu.utp.integradori.proyectofinal.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Trabajador {
     private char genero;
     private LocalDate fecha_nacimiento;
     private LocalDate fecha_registro;
+    private String correo;
     private List<Rol> roles;
     private List<Venta> ventas;
 
@@ -88,4 +90,15 @@ public class Trabajador {
         return ap_paterno + " " + ap_materno;
     }
 
+    public String getFechaRegistroFormateada() {
+        return fecha_registro.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 }

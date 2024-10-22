@@ -67,6 +67,7 @@ public class TrabajadorDAOImpl extends Conexion implements TrabajadorDAO {
                         roles,
                         new ArrayList<>()
                 );
+                trabajador.setCorreo(rs.getString("correo"));
                 return trabajador;
             }
         } catch (SQLException e) {
@@ -133,6 +134,7 @@ public class TrabajadorDAOImpl extends Conexion implements TrabajadorDAO {
                         roles,
                         new ArrayList<>()
                 );
+                trabajador.setCorreo(rs.getString("correo"));
                 trabajadores.add(trabajador);
             }
         } catch (SQLException e) {
