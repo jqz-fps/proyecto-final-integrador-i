@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.validator.routines.RegexValidator;
 import pe.edu.utp.integradori.proyectofinal.dao.TrabajadorDAOImpl;
+import pe.edu.utp.integradori.proyectofinal.handler.EmailHandler;
 import pe.edu.utp.integradori.proyectofinal.model.Rol;
 import pe.edu.utp.integradori.proyectofinal.model.Trabajador;
 
@@ -119,7 +120,18 @@ public class WorkersServlet extends HttpServlet {
                 return;
             }
 
-            // Aqui logica para enviar correos
+            EmailHandler.sendEmail(trabajador.getCorreo(),
+                    "Bienvenido a Líder Médica",
+                    "Estimado/a " + trabajador.getNombres() + " " + trabajador.getAp_paterno() + " " + trabajador.getAp_materno() + ",\n\n" +
+                            "¡Bienvenido/a a nuestra plataforma! Nos complace informarte que tu registro ha sido exitoso.\n\n" +
+                            "Aquí están los detalles de tu cuenta:\n" +
+                            "- **Correo electrónico:** " + trabajador.getCorreo() + "\n" +
+                            "- **Contraseña inicial:** " + trabajador.getDni() + "\n" +
+                            "*Para hacer uso del sistema es necesario cambiar la contraseña al iniciar sesión.*\n" +
+                            "Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.\n\n" +
+                            "Atentamente,\n" +
+                            "El equipo de Líder Médica"
+            );
 
             request.getSession().setAttribute("finalAgregado", "<div class=\"alert alert-success\">\n" +
                     "  <strong>Se ha agregado al trabajador.</strong>\n" +
