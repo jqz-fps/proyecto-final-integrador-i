@@ -4,8 +4,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class EmailHandler {
+
+    public static Logger logger = LoggerFactory.getLogger(EmailHandler.class);
 
     public static void sendEmail(String to, String subject, String body) {
         Dotenv dotenv = Dotenv.load();
@@ -27,8 +31,7 @@ public abstract class EmailHandler {
             email.addTo(to);
             email.send();
         } catch (EmailException e) {
-            System.out.println("Correo no enviado!");
-            System.out.println(e.getMessage());
+            logger.error("Error enviando correo electrónico: ", e);
         }
     }
 
