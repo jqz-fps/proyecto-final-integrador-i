@@ -34,22 +34,38 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        request.getSession().removeAttribute("error");
+        if(request.getParameter("username") != null && request.getParameter("password") != null) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            request.getSession().removeAttribute("error");
 
-        TrabajadorDAOImpl dao = new TrabajadorDAOImpl();
-        Trabajador trabajador = dao.readLogin(username, password);
+            TrabajadorDAOImpl dao = new TrabajadorDAOImpl();
+            Trabajador trabajador = dao.readLogin(username, password);
 
-        if (trabajador != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", trabajador);
+            if (trabajador != null) {
+                String dni = trabajador.getDni();
 
+                if (password.equals(dni)) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", trabajador);
+                    request.getRequestDispatcher("/cambiar.jsp").forward(request, response);
+                } else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", trabajador);
+                    response.sendRedirect(request.getContextPath() + "/dashboard/products");
+                }
+            } else {
+                request.setAttribute("error", "<div class=\"alert alert-danger mt-3\">Usuario o contraseña incorrectos</div>");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+        } else if (request.getParameter("passworda") != null && request.getParameter("password") != null) {
+            String password = request.getParameter("passworda");
+            TrabajadorDAOImpl dao = new TrabajadorDAOImpl();
+            Trabajador trabajador = (Trabajador) request.getSession().getAttribute("usuario");
+            dao.updatePassword(trabajador, password);
             response.sendRedirect(request.getContextPath() + "/dashboard/products");
-        } else {
-            request.setAttribute("error", "<div class=\"alert alert-danger mt-3\">Usuario o contraseña incorrectos</div>");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
+
 
 }
