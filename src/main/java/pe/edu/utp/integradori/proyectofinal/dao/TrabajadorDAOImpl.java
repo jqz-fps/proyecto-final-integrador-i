@@ -273,4 +273,17 @@ public class TrabajadorDAOImpl extends Conexion implements TrabajadorDAO {
         }
         return null;
     }
+
+    @Override
+    public void updatePassword(Trabajador trabajador, String contrasena) {
+        String query = "UPDATE trabajador SET contraseña = md5(?) WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, contrasena);
+            stmt.setInt(2, trabajador.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
