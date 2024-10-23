@@ -8,12 +8,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.validator.routines.RegexValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.FarmacoDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 @WebServlet(name = "sellsServlet", value = "/dashboard/sells")
 public class SellsServlet extends HttpServlet {
+
+    public static Logger logger = LoggerFactory.getLogger(SellsServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
@@ -57,6 +60,7 @@ public class SellsServlet extends HttpServlet {
             request.getSession().setAttribute("errorDNI", "<div class=\"alert alert-danger\">\n" +
                     "  <strong>El DNI ingresado no es válido. Debe tener 8 dígitos.</strong>\n" +
                     "</div>");
+            logger.error("El trabajador " + ((Trabajador) request.getSession().getAttribute("usuario")).getId() + " ha intentado ingresar un DNI no válido al registrar una venta");
             response.sendRedirect(request.getContextPath() + "/dashboard/sells");
             return;
         }
@@ -113,6 +117,7 @@ public class SellsServlet extends HttpServlet {
             return;
         }
 
+        logger.info("El trabajador " + ((Trabajador) request.getSession().getAttribute("usuario")).getId() + " ha registrado una venta");
         response.sendRedirect(request.getContextPath() + "/dashboard/sells");
     }
 

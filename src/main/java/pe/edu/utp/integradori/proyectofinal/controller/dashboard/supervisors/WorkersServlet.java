@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.validator.routines.RegexValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.TrabajadorDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.handler.EmailHandler;
 import pe.edu.utp.integradori.proyectofinal.model.Rol;
@@ -22,6 +24,8 @@ import java.util.List;
 
 @WebServlet(name = "supWorkersServlet", value = "/dashboard/supervision/workers")
 public class WorkersServlet extends HttpServlet {
+
+    public static Logger logger = LoggerFactory.getLogger(WorkersServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
@@ -65,6 +69,7 @@ public class WorkersServlet extends HttpServlet {
                 request.getSession().setAttribute("errorDNI", "<div class=\"alert alert-danger\">\n" +
                         "  <strong>El DNI ingresado no es válido. Debe tener 8 dígitos.</strong>\n" +
                         "</div>");
+                logger.error("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha ingresado un DNI no válido al agregar un trabajador");
                 response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
                 return;
             }
@@ -74,6 +79,7 @@ public class WorkersServlet extends HttpServlet {
                 request.getSession().setAttribute("errorCorreo", "<div class=\"alert alert-danger\">\n" +
                         "  <strong>El correo ingresado no es válido.</strong>\n" +
                         "</div>");
+                logger.error("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha ingresado un correo no válido al agregar un trabajador");
                 response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
                 return;
             }
@@ -82,6 +88,7 @@ public class WorkersServlet extends HttpServlet {
                 request.getSession().setAttribute("errorFechaNacimiento", "<div class=\"alert alert-danger\">\n" +
                         "  <strong>La fecha de nacimiento ingresada no es válida.</strong>\n" +
                         "</div>");
+                logger.error("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha ingresado una fecha de nacimiento no válida al agregar un trabajador");
                 response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
                 return;
             }
@@ -91,6 +98,7 @@ public class WorkersServlet extends HttpServlet {
                 request.getSession().setAttribute("errorTelefono", "<div class=\"alert alert-danger\">\n" +
                         "  <strong>El telefono ingresado no es válido.</strong>\n" +
                         "</div>");
+                logger.error("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha ingresado un telefono no válido al agregar un trabajador");
                 response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
                 return;
             }
@@ -136,6 +144,9 @@ public class WorkersServlet extends HttpServlet {
             request.getSession().setAttribute("finalAgregado", "<div class=\"alert alert-success\">\n" +
                     "  <strong>Se ha agregado al trabajador.</strong>\n" +
                     "</div>");
+
+            logger.info("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha agregado al trabajador " + trabajador.getId());
+
             response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
         } else if (dniedit != null) {
             try {
@@ -164,6 +175,9 @@ public class WorkersServlet extends HttpServlet {
             request.getSession().setAttribute("finalAgregado", "<div class=\"alert alert-success\">\n" +
                     "  <strong>Se ha actualizado al trabajador.</strong>\n" +
                     "</div>");
+
+            logger.info("El supervisor " + (Trabajador) request.getSession().getAttribute("usuario") + " ha actualizado al trabajador " + trabajador.getId());
+
             response.sendRedirect(request.getContextPath() + "/dashboard/supervision/workers");
             } catch (SQLException e) {
                 throw new RuntimeException(e);

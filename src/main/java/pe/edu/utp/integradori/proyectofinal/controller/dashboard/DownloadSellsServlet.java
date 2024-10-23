@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.Rol;
 import pe.edu.utp.integradori.proyectofinal.model.Trabajador;
@@ -19,6 +21,8 @@ import java.util.List;
 
 @WebServlet(name = "downloadSellsServlet", value = "/dashboard/sells/download")
 public class DownloadSellsServlet extends jakarta.servlet.http.HttpServlet {
+
+    public static Logger logger = LoggerFactory.getLogger(DownloadSellsServlet.class);
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -67,6 +71,9 @@ public class DownloadSellsServlet extends jakarta.servlet.http.HttpServlet {
         workbook.write(outputStream);
         workbook.close();
         outputStream.close();
+
+        logger.info("El trabajador " + ((Trabajador) request.getSession().getAttribute("usuario")).getId() +
+                " ha descargado el formato excel de las ventas");
 
         response.sendRedirect(request.getContextPath() + "/dashboard/sells");
     }
