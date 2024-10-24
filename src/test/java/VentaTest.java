@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.*;
 
 import java.time.LocalDate;
@@ -81,5 +82,22 @@ public class VentaTest {
         LocalDateTime fecha = LocalDateTime.now();
         String dni_comprador = "12345678";
         Venta venta = new Venta(1, vendedor, detalles, fecha, dni_comprador);
+    }
+
+    @Test
+    public void testB() {
+        List<DetalleVenta> detalles = new ArrayList<>();
+        LocalDateTime fecha = LocalDateTime.now();
+        String dni_comprador = "12345678";
+        detalles.add(new DetalleVenta(farmaco1, (byte) 60, 1f));
+        // El stock del producto es 50
+        Venta venta = new Venta(1, vendedor, detalles, fecha, dni_comprador);
+        VentaDAOImpl ventaDAO = new VentaDAOImpl();
+        try {
+            ventaDAO.create(venta);
+        } catch (Exception e) {
+            // El error que se muestra es: El stock de (producto) es insuficiente
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
