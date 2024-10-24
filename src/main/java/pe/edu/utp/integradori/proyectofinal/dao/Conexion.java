@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexion {
+public abstract class Conexion {
 
     protected Connection getConnection() throws SQLException {
         Dotenv dotenv = Dotenv.load();
