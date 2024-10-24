@@ -81,7 +81,9 @@ public class VentaTest {
         List<DetalleVenta> detalles = null; // Venta sin detalles
         LocalDateTime fecha = LocalDateTime.now();
         String dni_comprador = "12345678";
-        Venta venta = new Venta(1, vendedor, detalles, fecha, dni_comprador);
+        Venta venta = new Venta(1, vendedor,
+                detalles, fecha, dni_comprador);
+        // El error que se muestra es: El arreglo de detalles no puede ser nulo
     }
 
     @Test
