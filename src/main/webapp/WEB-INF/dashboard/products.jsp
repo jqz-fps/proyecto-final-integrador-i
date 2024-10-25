@@ -68,14 +68,14 @@
           <span>Distribuidoras</span>
         </a>
       </div>
-      <c:if test="${usuario != null && usuario.hasRole('Supervisor')}">
+      <% if (esSupervisor) { %>
         <div class="radio">
           <a href="supervision/workers" class="sidebar-label">
             <i class="bi bi-person-fill-lock"></i>
             <span>Panel de supervisores</span>
           </a>
         </div>
-      </c:if>
+      <% } %>
       <div class="radio" data-bs-toggle="modal" data-bs-target="#sessionExitModal">
         <label class="sidebar-label"
                style="--background-secondary: #fa5050; --color-primary: #161616">
