@@ -198,7 +198,9 @@
                                         <div class="group col-md-8">
                                             <select name="idp1" id="idp1" class="form-control" required>
                                                 <c:forEach var="producto" items="${productosCargados}">
-                                                    <option value="${producto.id}">${producto.getId()} - ${producto.getNombre()}</option>
+                                                    <option value="${producto.id}" data-precio="${producto.precio}">
+                                                            ${producto.id} - ${producto.nombre}
+                                                    </option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -214,37 +216,65 @@
                                 </style>
                                 <script>
                                     let prodActual = 1;
-                                    
+
                                     function addProductRow() {
                                         prodActual++;
                                         const productos = `
-                                        <div class="product-row">
-                                            <label class="oblig">Producto ` + prodActual + `:</label>
-                                            <div class="row">
-                                                <div class="group col-md-8">
-                                                    <select name="idp` + prodActual + `" id="idp` + prodActual + `" class="form-control" required>
-                                                        <c:forEach var="producto" items="${productosCargados}">
-                                                            <option value="${producto.id}">${producto.id} - ${producto.nombre}</option>
-                                                        </c:forEach>
-                                                    </select>
+                                            <div class="product-row">
+                                                <label class="oblig">Producto ` + prodActual + `:</label>
+                                                <div class="row">
+                                                    <div class="group col-md-8">
+                                                        <select name="idp` + prodActual + `" id="idp` + prodActual + `" class="form-control" required>
+                                                            <c:forEach var="producto" items="${productosCargados}">
+                                                                <option value="${producto.id}" data-precio="${producto.precio}">
+                                                                    ${producto.id} - ${producto.nombre}
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                    <div class="group col">
+                                                        <input type="number" name="cantidadp` + prodActual + `" id="cantidadp` + prodActual + `" class="form-control" placeholder="Cantidad" min="0" required>
+                                                    </div>
                                                 </div>
-                                                <div class="group col">
-                                                    <input type="number" name="cantidadp` + prodActual + `" id="cantidadp` + prodActual + `" class="form-control" placeholder="Cantidad" min="0" required>
-                                                </div>
-                                            </div>
-                                        </div>`;
-                                        
+                                            </div>`;
                                         document.querySelector('.modal-products').innerHTML += productos;
+                                        calculateTotal();
                                     }
-                                
+
                                     function removeLastRow() {
                                         const productRows = document.querySelectorAll('.modal-products .product-row');
                                         if (productRows.length > 1) {
                                             productRows[productRows.length - 1].remove();
                                             prodActual--;
+                                            calculateTotal();
                                         }
                                     }
+
+                                    function calculateTotal() {
+                                        let total = 0;
+                                        const productRows = document.querySelectorAll('.modal-products .product-row');
+
+                                        productRows.forEach(row => {
+                                            const select = row.querySelector('select');
+                                            const quantityInput = row.querySelector('input[type="number"]');
+
+                                            if (select && quantityInput) {
+                                                const selectedOption = select.options[select.selectedIndex];
+                                                const price = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
+                                                const quantity = parseInt(quantityInput.value) || 0;
+                                                total += price * quantity;
+                                            }
+                                        });
+
+                                        document.getElementById('total-price').textContent = `Total: S/ ` + total.toFixed(2);
+                                    }
+                                    document.addEventListener('change', event => {
+                                        if (event.target.matches('.modal-products select') || event.target.matches('.modal-products input[type="number"]')) {
+                                            calculateTotal();
+                                        }
+                                    });
                                 </script>
+
                             </div><br>
                             <div class="row">
                                 <div class="col-md-6">
@@ -256,6 +286,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <span id="total-price" class="me-auto">Total: S/ 0.00</span>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-tertiary">Guardar</button>
                         </div>
