@@ -38,46 +38,46 @@
         <br>
         <div class="sidebar">
             <div class="radio checked">
-                <a href="sells" class="sidebar-label">
+                <a id="sells-link" href="sells" class="sidebar-label">
                     <i class="bi bi-receipt"></i>
                     <span>Ventas</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="products" class="sidebar-label">
+                <a id="products-link" href="products" class="sidebar-label">
                     <i class="bi bi-box"></i>
                     <span>Productos</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="labs" class="sidebar-label">
+                <a id="labs-link" href="labs" class="sidebar-label">
                     <i class="bi bi-shop"></i>
                     <span>Laboratorios</span>
                 </a>
             </div>
             <div class="radio">
                 <input type="radio" class="sidebar-radio" id="sidebar-categories" name="sidebar-radio-group">
-                <a href="categories" class="sidebar-label">
+                <a id="categories-link" href="categories" class="sidebar-label">
                     <i class="bi bi-diagram-3"></i>
                     <span>Categorías</span>
                 </a>
             </div>
             <div class="radio">
-                <a href="distributors" class="sidebar-label">
+                <a id="distributors-link" href="distributors" class="sidebar-label">
                     <i class="bi bi-truck"></i>
                     <span>Distribuidoras</span>
                 </a>
             </div>
             <c:if test="${usuario != null && usuario.hasRole('Supervisor')}">
                 <div class="radio">
-                    <a href="supervision/workers" class="sidebar-label">
+                    <a id="supervision-workers-link" href="supervision/workers" class="sidebar-label">
                         <i class="bi bi-person-fill-lock"></i>
                         <span>Panel de supervisores</span>
                     </a>
                 </div>
             </c:if>
             <div class="radio" data-bs-toggle="modal" data-bs-target="#sessionExitModal">
-                <label class="sidebar-label"
+                <label id="session-exit-label" class="sidebar-label"
                        style="--background-secondary: #fa5050; --color-primary: #161616">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Cerrar Sesión</span>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-tertiary" data-bs-dismiss="modal" onclick="document.getElementById('logout-form').submit();">Cerrar Sesión</button>
+                            <button id="btn-cerrar-sesion-fin" type="button" class="btn btn-tertiary" data-bs-dismiss="modal" onclick="document.getElementById('logout-form').submit();">Cerrar Sesión</button>
                             <form id="logout-form" action="${pageContext.request.contextPath}/logout" method="post" style="display:none;">
                                 <input type="hidden" name="_method" value="POST">
                             </form>
@@ -126,7 +126,7 @@
                         <button class="btn btn-tertiary" type="submit"><i class="bi bi-download"></i> Descargar XLSX</button>
                     </form>
                 <% } %>
-                <button class="btn btn-tertiary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-plus"></i> Venta</button>
+                <button id="btn-registrar-nueva-venta" class="btn btn-tertiary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-plus"></i> Venta</button>
             </div>
         </div>
         <c:if test="${not empty sessionScope.errorDNI}">
@@ -288,7 +288,7 @@
                         <div class="modal-footer">
                             <span id="total-price" class="me-auto">Total: S/ 0.00</span>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-tertiary">Guardar</button>
+                            <button id="guardar-nueva-venta" type="submit" class="btn btn-tertiary">Guardar</button>
                         </div>
                     </form>
                 </div>
