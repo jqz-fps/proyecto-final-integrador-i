@@ -12,7 +12,27 @@ public class FarmacoDAOImpl extends Conexion implements FarmacoDAO {
 
     @Override
     public void create(Farmaco farmaco) throws SQLException {
+        String query = "{CALL InsertarFarmaco(?, ?, ?, ?, ?, ?)}";
 
+        try (Connection conn = getConnection();
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.setString(1, farmaco.getNombre());
+            stmt.setString(2, farmaco.getDescripcion());
+            stmt.setString(3, farmaco.getPresentacion());
+            stmt.setString(4, farmaco.getComposicion());
+            stmt.setInt(5, farmaco.getStock());
+            stmt.setFloat(6, farmaco.getPrecio());
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int generatedId = rs.getInt("id_farmaco");
+                farmaco.setId(generatedId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al insertar el fármaco: " + e.getMessage(), e);
+        }
     }
 
     @Override
