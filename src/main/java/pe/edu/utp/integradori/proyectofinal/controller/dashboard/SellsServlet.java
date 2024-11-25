@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.FarmacoDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
+import pe.edu.utp.integradori.proyectofinal.handler.EmailHandler;
 import pe.edu.utp.integradori.proyectofinal.model.*;
 
 import java.io.IOException;
@@ -118,6 +119,32 @@ public class SellsServlet extends HttpServlet {
         }
 
         logger.info("El trabajador " + ((Trabajador) request.getSession().getAttribute("usuario")).getId() + " ha registrado una venta");
+
+        Trabajador trabajador = (Trabajador) request.getSession().getAttribute("usuario");
+        StringBuilder correoBody = new StringBuilder();
+        correoBody.append("Hola, ").append(trabajador.getNombres()).append(",\n\n")
+                .append("Se ha registrado correctamente una venta a nombre del comprador con DNI: ").append(dniComprador).append(".\n")
+                .append("Detalles de la venta:\n");
+
+        float totalVenta = 0.0f;
+        for (DetalleVenta detalle : detalles) {
+            correoBody.append("- Producto: ").append(detalle.getFarmaco().getNombre())
+                    .append(", Cantidad: ").append(detalle.getCantidad())
+                    .append(", Precio Unitario: S/").append(detalle.getPrecio_unidad())
+                    .append("\n");
+            totalVenta += detalle.getCantidad() * detalle.getPrecio_unidad();
+        }
+
+        correoBody.append("\nTotal de la venta: S/").append(totalVenta).append("\n\n")
+                .append("Gracias por usar nuestro sistema.\n")
+                .append("Atentamente,\nEl equipo de Líder Médica");
+
+        EmailHandler.sendEmail(
+                trabajador.getCorreo(),
+                "Confirmación de nueva venta",
+                correoBody.toString()
+        );
+
         response.sendRedirect(request.getContextPath() + "/dashboard/sells");
     }
 
