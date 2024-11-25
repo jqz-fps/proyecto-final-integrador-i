@@ -117,7 +117,7 @@
         <h3>Trabajadores</h3>
         <div class="search-container">
           <i class="bi bi-search"></i>
-          <input autocomplete="off" type="text" placeholder="Buscar..." class="form-control">
+          <input autocomplete="off" type="text" placeholder="Buscar..." id="input-buscar-tabla" class="form-control">
         </div>
       </div>
       <div class="right">
@@ -366,4 +366,24 @@
   </div>
 </div>
 </body>
+<script defer>
+  document.getElementById('input-buscar-tabla').addEventListener('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('table tbody tr');
+    let visibleRowIndex = 0;
+
+    rows.forEach(row => {
+      const cells = Array.from(row.cells);
+      const matches = cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+      row.style.display = matches ? '' : 'none';
+
+      if (matches) {
+        row.style.backgroundColor = visibleRowIndex % 2 === 0 
+          ? 'var(--background-primary)' 
+          : 'var(--background-secondary)';
+        visibleRowIndex++;
+      }
+    });
+  });
+</script>
 </html>

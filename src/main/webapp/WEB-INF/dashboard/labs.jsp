@@ -123,7 +123,7 @@
                 <h3>Laboratorios</h3>
                 <div class="search-container">
                     <i class="bi bi-search"></i>
-                    <input autocomplete="off" type="text" placeholder="Buscar..." class="form-control" (input)="applyFilter($event)">
+                    <input autocomplete="off" type="text" placeholder="Buscar..." id="input-buscar-tabla" class="form-control" (input)="applyFilter($event)">
                 </div>
             </div>
             <% if (esSupervisor) { %>
@@ -182,4 +182,24 @@
 </div>
 
 </body>
+<script defer>
+  document.getElementById('input-buscar-tabla').addEventListener('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('table tbody tr');
+    let visibleRowIndex = 0;
+
+    rows.forEach(row => {
+      const cells = Array.from(row.cells);
+      const matches = cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+      row.style.display = matches ? '' : 'none';
+
+      if (matches) {
+        row.style.backgroundColor = visibleRowIndex % 2 === 0 
+          ? 'var(--background-primary)' 
+          : 'var(--background-secondary)';
+        visibleRowIndex++;
+      }
+    });
+  });
+</script>
 </html>
