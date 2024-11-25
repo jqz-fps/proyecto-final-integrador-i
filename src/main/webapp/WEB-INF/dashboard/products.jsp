@@ -161,12 +161,18 @@
                       <label for="laboratorio" class="form-label oblig">Laboratorio</label>
                       <select name="laboratorio" id="laboratorio" class="form-select" required>
                         <option value="laboratorio" style="display: none;">Laboratorio</option>
+                        <c:forEach var="laboratorio" items="${laboratoriosCargados}">
+                          <option value="${laboratorio.id}">${laboratorio.nombre}</option>
+                        </c:forEach>
                       </select>
                     </div>
                     <div class="group col">
                       <label for="categoria" class="form-label">Categoria</label>
                       <select name="categoria" id="categoria" class="form-select" required>
                         <option value="categoria" style="display: none;">Categoria</option>
+                        <c:forEach var="categoria" items="${categoriasCargadas}">
+                          <option value="${categoria.id}">${categoria.nombre}</option>
+                        </c:forEach>
                       </select>
                     </div>
                   </div>
