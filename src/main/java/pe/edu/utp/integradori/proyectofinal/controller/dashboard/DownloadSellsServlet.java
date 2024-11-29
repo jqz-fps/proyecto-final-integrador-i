@@ -55,11 +55,10 @@ public class DownloadSellsServlet extends jakarta.servlet.http.HttpServlet {
             createCell(workbook, row, 1, venta.getVendedor().getNombres());
             createCell(workbook, row, 2, venta.getVendedor().getApellidos());
             createCell(workbook, row, 3, venta.getDni_comprador());
-            createCell(workbook, row, 4, venta.getFecha()); // LocalDateTime se manejará correctamente en la función
+            createCell(workbook, row, 4, venta.getFecha());
             createCell(workbook, row, 5, venta.getTotal());
         }
 
-        // Ajustar el tamaño de las columnas
         for (int i = 0; i < 6; i++) {
             sheet.autoSizeColumn(i);
         }
