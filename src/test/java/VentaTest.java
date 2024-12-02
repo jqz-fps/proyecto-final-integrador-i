@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pe.edu.utp.integradori.proyectofinal.dao.VentaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.model.*;
 
 import java.time.LocalDate;
@@ -13,7 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class VentaTest {
 
-    static Trabajador vendedor;
+    static Trabajador vendedor = new Trabajador(
+                1, "12345678", "Cristhian", "Zeña", "Bances",
+                        'M', LocalDate.of(2004, 1, 12), LocalDateTime.now(),
+                new ArrayList<Rol>(), new ArrayList<Venta>()
+                        );
     static Farmaco farmaco1;
     static Farmaco farmaco2;
     static Farmaco farmaco3;
@@ -21,11 +24,6 @@ public class VentaTest {
 
     @BeforeEach
     public void setUp() {
-        vendedor = new Trabajador(
-                1, "12345678", "Cristhian", "Zeña", "Bances",
-                'M', LocalDate.of(2004, 1, 12), LocalDateTime.now(),
-                new ArrayList<Rol>(), new ArrayList<Venta>()
-        );
         farmaco1 = new Farmaco(
                 1,
                 new Laboratorio(1, "Laboratorio A"),
