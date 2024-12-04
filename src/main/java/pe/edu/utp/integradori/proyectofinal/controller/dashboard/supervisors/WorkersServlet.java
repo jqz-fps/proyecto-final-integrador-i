@@ -7,13 +7,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.validator.routines.RegexValidator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.TrabajadorDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.handler.EmailHandler;
+import pe.edu.utp.integradori.proyectofinal.handler.StringUtilities;
 import pe.edu.utp.integradori.proyectofinal.model.Rol;
 import pe.edu.utp.integradori.proyectofinal.model.Trabajador;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -53,14 +54,14 @@ public class WorkersServlet extends HttpServlet {
         String dniedit = request.getParameter("edit-dni");
 
         if(dni != null) {
-            String nombres = request.getParameter("nombres");
-            String ap_paterno = request.getParameter("apellido_paterno");
-            String ap_materno = request.getParameter("apellido_materno");
-            String sexo = request.getParameter("genero");
+            String nombres = StringUtilities.sanitize(request.getParameter("nombres"));
+            String ap_paterno = StringUtilities.sanitize(request.getParameter("apellido_paterno"));
+            String ap_materno = StringUtilities.sanitize(request.getParameter("apellido_materno"));
+            String sexo = StringUtilities.sanitize(request.getParameter("genero"));
+            String correo = StringUtilities.sanitize(request.getParameter("correo"));
+            String telefono = StringUtilities.sanitize(request.getParameter("telefono"));
             LocalDate fecha_nacimiento = LocalDate.parse(request.getParameter("fecha_nacimiento"));
             LocalDateTime fecha_registro = LocalDateTime.now();
-            String correo = request.getParameter("correo");
-            String telefono = request.getParameter("telefono");
             List<Rol> roles = new ArrayList<>();
             if (request.getParameter("supervisor") != null) roles.add(Rol.Supervisor);
 
