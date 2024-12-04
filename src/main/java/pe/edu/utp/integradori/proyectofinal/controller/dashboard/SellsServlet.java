@@ -18,10 +18,7 @@ import pe.edu.utp.integradori.proyectofinal.model.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(name = "sellsServlet", value = "/dashboard/sells")
 public class SellsServlet extends HttpServlet {
@@ -82,6 +79,8 @@ public class SellsServlet extends HttpServlet {
 
         FarmacoDAOImpl farmacoDAO = new FarmacoDAOImpl();
 
+        Map<Integer, Integer> farmacoCantidadMap = new HashMap<>();
+
         for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
             String paramName = entry.getKey();
             String[] paramValues = entry.getValue();
@@ -89,18 +88,40 @@ public class SellsServlet extends HttpServlet {
             if (paramName.startsWith("idp")) {
                 int index = Integer.parseInt(paramName.substring(3));
                 int idFarmaco = Integer.parseInt(paramValues[0]);
+                farmacoCantidadMap.put(index, idFarmaco);
+            }
+        }
 
-                try {
-                    farmaco = farmacoDAO.read(idFarmaco);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+        for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
+            String paramName = entry.getKey();
+            String[] paramValues = entry.getValue();
 
-            } else if (paramName.startsWith("cantidadp")) {
+            if (paramName.startsWith("cantidadp")) {
                 int index = Integer.parseInt(paramName.substring(9));
                 cantidad = Byte.parseByte(paramValues[0]);
 
-                assert farmaco != null;
+                // Aseguramos que el fármaco correspondiente esté presente
+                int idFarmaco = farmacoCantidadMap.getOrDefault(index, -1);
+                if (idFarmaco == -1) {
+                    logger.error("No se encontró un fármaco para el índice " + index);
+                    request.getSession().setAttribute("error", "No se encontró un fármaco asociado para el índice " + index);
+                    response.sendRedirect(request.getContextPath() + "/dashboard/sells");
+                    return;
+                }
+
+                // Intentamos obtener el fármaco de la base de datos
+                try {
+                    farmaco = farmacoDAO.read(idFarmaco);
+                    if (farmaco == null) {
+                        throw new IllegalStateException("Fármaco no encontrado en la base de datos para el ID: " + idFarmaco);
+                    }
+                } catch (SQLException e) {
+                    logger.error("Error al leer el fármaco con ID: " + idFarmaco, e);
+                    request.getSession().setAttribute("error", "No se pudo procesar el fármaco con ID: " + idFarmaco);
+                    response.sendRedirect(request.getContextPath() + "/dashboard/sells");
+                    return;
+                }
+
                 precio = farmaco.getPrecio();
                 DetalleVenta detalle = new DetalleVenta(farmaco, cantidad, precio);
                 detalles.add(detalle);
@@ -147,7 +168,5 @@ public class SellsServlet extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/dashboard/sells");
     }
-
-
 
 }
