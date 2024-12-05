@@ -115,7 +115,7 @@ public class Trabajador {
     }
 
     public String getGeneroParseado() {
-        return genero == 'M' ? "Masculino" : "Feminino";
+        return genero == 'M' ? "Masculino" : "Femenino";
     }
 
     public String getTelefono() {
