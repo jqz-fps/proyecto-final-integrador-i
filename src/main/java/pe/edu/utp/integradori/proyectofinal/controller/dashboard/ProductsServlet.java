@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import pe.edu.utp.integradori.proyectofinal.dao.CategoriaDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.dao.FarmacoDAOImpl;
 import pe.edu.utp.integradori.proyectofinal.dao.LaboratorioDAOImpl;
+import pe.edu.utp.integradori.proyectofinal.handler.StringUtilities;
 import pe.edu.utp.integradori.proyectofinal.model.*;
 
 import java.io.IOException;
@@ -45,12 +46,12 @@ public class ProductsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nombre = request.getParameter("nombre");
-        String presentacion = request.getParameter("presentacion");
-        String composicion = request.getParameter("composicion");
-        String precioParam = request.getParameter("precio");
-        String stockParam = request.getParameter("stock");
-        String laboratorioIdParam = request.getParameter("laboratorio");
+        String nombre = StringUtilities.sanitize(request.getParameter("nombre"));
+        String presentacion = StringUtilities.sanitize(request.getParameter("presentacion"));
+        String composicion = StringUtilities.sanitize(request.getParameter("composicion"));
+        String precioParam = StringUtilities.sanitize(request.getParameter("precio"));
+        String stockParam = StringUtilities.sanitize(request.getParameter("stock"));
+        String laboratorioIdParam = StringUtilities.sanitize(request.getParameter("laboratorio"));
         String[] categoriasIds = request.getParameterValues("categoria");
         if (nombre == null || presentacion == null || composicion == null ||
                 precioParam == null || stockParam == null || laboratorioIdParam == null || categoriasIds == null) {
